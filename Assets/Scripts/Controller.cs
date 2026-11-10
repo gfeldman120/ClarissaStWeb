@@ -7,6 +7,9 @@ public class Controller : MonoBehaviour
     [SerializeField] private float teleportDelay = 0.1f;
     [SerializeField] private LayerMask teleportLayer;
     [SerializeField] private GameObject teleportPreview;
+    [SerializeField] private LayerMask reconstructionMask;
+    [SerializeField] private LayerMask geoMask;
+    private bool usingGeoMask;
     private bool dragging;
     private Vector2 initialPosition;
     private Vector2 lastPosition;
@@ -91,6 +94,12 @@ public class Controller : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 DebugFly();
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                usingGeoMask = !usingGeoMask;
+                Camera.allCameras[0].cullingMask = usingGeoMask ? geoMask : reconstructionMask;
             }
         }
     }
